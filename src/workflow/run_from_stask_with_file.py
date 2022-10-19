@@ -34,7 +34,7 @@ commands.append("task=WorkflowTask")
 commands.append("workflow=outer")
 
 # Requires that the environment is set, but an alternative path may be given
-exe =  os.getenv('SIMA_EXE')
+exe =  os.getenv('SRE_EXE')
 sima = SIMA(exe=exe)
 output = sima.run(workspace=str(ws),commands=commands)
 for line in output:

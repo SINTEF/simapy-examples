@@ -30,7 +30,7 @@ commands.append("workflow=workflow")
 commands.append(f"input=scale={scale}")
 
 # Requires that the environment is set, but an alternative path may be given
-exe =  os.getenv('SIMA_EXE')
+exe =  os.getenv('SRE_EXE')
 sima = SIMA(exe=exe)
 output = sima.run(workspace=str(ws),commands=commands)
 for line in output:

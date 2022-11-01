@@ -1,385 +1,346 @@
 {
-    "type": "sima/ModelContent",
-    "header": {
-        "type": "sima/Header",
-        "packages": [
-            {
-                "type": "sima/PackageInfo",
-                "name": "workflow",
-                "version": 16
-            },
-            {
-                "type": "sima/PackageInfo",
-                "name": "graph",
-                "version": 3
-            },
-            {
-                "type": "sima/PackageInfo",
-                "name": "post",
-                "version": 25
-            },
-            {
-                "type": "sima/PackageInfo",
-                "name": "sima",
-                "version": 23
-            }
-        ]
-    },
-    "contents": [
-        {
-            "name": "WorkflowTask",
-            "type": "sima/workflow/WorkflowTask",
-            "runNumber": 0,
-            "workflows": [
-                {
-                    "name": "workflow",
-                    "type": "sima/workflow/Workflow",
-                    "nodes": [
-                        {
-                            "type": "sima/workflow/ExternalProgramNode",
-                            "scriptableValues": [
-                                {
-                                    "type": "sima/sima/ScriptableValue",
-                                    "script": "scale",
-                                    "dependencies": [
-                                        {
-                                            "type": "sima/sima/Dependency",
-                                            "object": {
-                                                "type": "sima/post/NumberSignalInputSlot",
-                                                "_id": "a04908c2-4043-4cc4-a8f7-c1475945b1de"
-                                            },
-                                            "feature": "value"
-                                        }
-                                    ],
-                                    "cyclic": false,
-                                    "feature": "arguments",
-                                    "index": -1
-                                }
-                            ],
-                            "x": 260,
-                            "y": 90,
-                            "h": 0,
-                            "w": 0,
-                            "controlSignalInputSlots": [
-                                {
-                                    "name": "scale",
-                                    "_id": "a04908c2-4043-4cc4-a8f7-c1475945b1de",
-                                    "type": "sima/post/NumberSignalInputSlot",
-                                    "specifyAdditionalProperties": false,
-                                    "array": false,
-                                    "value": 0.0
-                                }
-                            ],
-                            "executable": "sima://ExternalStorage\\multiply.py",
-                            "arguments": "5.0",
-                            "fileInputSlots": [
-                                {
-                                    "name": "in",
-                                    "_id": "497c5346-e4b0-4be0-a9f9-b99f0294abbc",
-                                    "type": "sima/workflow/FileInputSlot",
-                                    "filename": "in.json",
-                                    "specifyAdditionalProperties": false
-                                }
-                            ],
-                            "fileOutputSlots": [
-                                {
-                                    "name": "out",
-                                    "_id": "7f4da098-5ef2-41b0-b744-76460caa2967",
-                                    "type": "sima/workflow/FileOutputSlot",
-                                    "filename": "out.json",
-                                    "pathOnly": false
-                                }
-                            ],
-                            "fileFormat": "JSON",
-                            "failOnErrorCode": true,
-                            "addInputFiles": false
-                        },
-                        {
-                            "type": "sima/workflow/SignalGeneratorWorkflowNode",
-                            "x": 40,
-                            "y": 30,
-                            "h": 0,
-                            "w": 0,
-                            "root": {
-                                "name": "root",
-                                "type": "sima/post/SignalGeneratorContainer",
-                                "children": [
-                                    {
-                                        "name": "some_data",
-                                        "type": "sima/post/SignalGeneratorContainer",
-                                        "signals": [
-                                            {
-                                                "name": "mysine",
-                                                "type": "sima/post/EquidistantSignal",
-                                                "directInput": false,
-                                                "values": [],
-                                                "xunit": "s",
-                                                "yunit": "-",
-                                                "offset": 0.0,
-                                                "increment": 0.1,
-                                                "size": 100,
-                                                "function": "cos(x)"
-                                            },
-                                            {
-                                                "name": "mynum",
-                                                "type": "sima/post/ConstantValue",
-                                                "value": 1.0,
-                                                "unit": "-"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            "outputSlot": {
-                                "name": "out",
-                                "_id": "1506f5db-3906-46da-9720-edb5ac8b6e84",
-                                "type": "sima/post/OutputSlot"
-                            }
-                        },
-                        {
-                            "name": "Plot",
-                            "type": "sima/workflow/PlotNode",
-                            "x": 530,
-                            "y": 30,
-                            "h": 0,
-                            "w": 0,
-                            "inputSlot": {
-                                "name": "in",
-                                "_id": "2cc1c931-d141-4bcf-8172-16840c719ca4",
-                                "type": "sima/post/InputSlot"
-                            },
-                            "figureTemplate": {
-                                "type": "sima/post/FigureTemplate",
-                                "titleFont": {
-                                    "type": "sima/sima/FontDescription",
-                                    "size": 0,
-                                    "style": "NORMAL",
-                                    "color": {
-                                        "type": "sima/sima/SIMAColor",
-                                        "red": 0.0,
-                                        "green": 0.0,
-                                        "blue": 0.0
-                                    }
-                                },
-                                "legendFont": {
-                                    "type": "sima/sima/FontDescription",
-                                    "size": 0,
-                                    "style": "NORMAL",
-                                    "color": {
-                                        "type": "sima/sima/SIMAColor",
-                                        "red": 0.0,
-                                        "green": 0.0,
-                                        "blue": 0.0
-                                    }
-                                },
-                                "xAxis": {
-                                    "type": "sima/post/AxisConfiguration",
-                                    "font": {
-                                        "type": "sima/sima/FontDescription",
-                                        "size": 0,
-                                        "style": "NORMAL",
-                                        "color": {
-                                            "type": "sima/sima/SIMAColor",
-                                            "red": 0.0,
-                                            "green": 0.0,
-                                            "blue": 0.0
-                                        }
-                                    },
-                                    "log": false,
-                                    "autoFormat": true,
-                                    "format": "0.####E0",
-                                    "showGrid": true,
-                                    "dashGridLine": false,
-                                    "autoScale": true,
-                                    "minimum": 0.0,
-                                    "maximum": 0.0
-                                },
-                                "yAxis": {
-                                    "type": "sima/post/AxisConfiguration",
-                                    "font": {
-                                        "type": "sima/sima/FontDescription",
-                                        "size": 0,
-                                        "style": "NORMAL",
-                                        "color": {
-                                            "type": "sima/sima/SIMAColor",
-                                            "red": 0.0,
-                                            "green": 0.0,
-                                            "blue": 0.0
-                                        }
-                                    },
-                                    "log": false,
-                                    "autoFormat": true,
-                                    "format": "0.####E0",
-                                    "showGrid": true,
-                                    "dashGridLine": false,
-                                    "autoScale": true,
-                                    "minimum": 0.0,
-                                    "maximum": 0.0
-                                },
-                                "showTitle": true,
-                                "showLegend": true,
-                                "size": "DYNAMIC",
-                                "width": 0,
-                                "height": 0
-                            },
-                            "traces": [
-                                {
-                                    "name": "mysine_frompy",
-                                    "type": "sima/post/TraceConfiguration",
-                                    "path": "some_data.mysine_frompy",
-                                    "color": {
-                                        "type": "sima/sima/SIMAColor",
-                                        "red": 0.08235294117647059,
-                                        "green": 0.08235294117647059,
-                                        "blue": 0.7686274509803922
-                                    },
-                                    "lineStyle": "SOLID",
-                                    "lineWidth": 1,
-                                    "pointStyle": "NONE",
-                                    "showStatistics": true,
-                                    "pointSize": 4,
-                                    "specifyPath": false
-                                },
-                                {
-                                    "name": "mysine",
-                                    "type": "sima/post/TraceConfiguration",
-                                    "path": "some_data.mysine",
-                                    "color": {
-                                        "type": "sima/sima/SIMAColor",
-                                        "red": 0.9490196078431372,
-                                        "green": 0.10196078431372549,
-                                        "blue": 0.10196078431372549
-                                    },
-                                    "lineStyle": "SOLID",
-                                    "lineWidth": 1,
-                                    "pointStyle": "NONE",
-                                    "showStatistics": true,
-                                    "pointSize": 4,
-                                    "specifyPath": false
-                                }
-                            ],
-                            "fixed": true,
-                            "selectAll": false,
-                            "outputSlot": {
-                                "name": "image",
-                                "type": "sima/post/OutputSlot"
-                            },
-                            "createImages": false
-                        },
-                        {
-                            "name": "scale",
-                            "type": "sima/workflow/RealNumberInput",
-                            "x": 50,
-                            "y": 130,
-                            "h": 0,
-                            "w": 0,
-                            "outputSlot": {
-                                "name": "out",
-                                "_id": "3b86c374-a5ec-4dff-b42b-160cc7ac4f6f",
-                                "type": "sima/workflow/VariableOutputSlot"
-                            },
-                            "specifyAdditionalProperties": false,
-                            "value": 5.0,
-                            "array": false,
-                            "values": []
-                        },
-                        {
-                            "name": "File_Output",
-                            "type": "sima/workflow/FileOutputNode",
-                            "x": 540,
-                            "y": 120,
-                            "h": 0,
-                            "w": 0,
-                            "inputSlot": {
-                                "name": "in",
-                                "_id": "845f0001-2856-4e96-a2dd-7cf0460434b7",
-                                "type": "sima/post/InputSlot"
-                            },
-                            "filePath": "sima://out.json",
-                            "fileFormat": "JSON",
-                            "addMetaTags": false,
-                            "decimalSeparator": "PERIOD",
-                            "skipHeader": false,
-                            "specifyAdditionalProperties": false,
-                            "writeRawText": false,
-                            "outputSlot": {
-                                "name": "path",
-                                "type": "sima/post/OutputSlot"
-                            }
-                        }
-                    ],
-                    "connections": [
-                        {
-                            "type": "sima/post/SlotConnection",
-                            "useQuery": false,
-                            "toSlot": {
-                                "type": "sima/workflow/FileInputSlot",
-                                "_id": "497c5346-e4b0-4be0-a9f9-b99f0294abbc"
-                            },
-                            "fromSlot": {
-                                "type": "sima/post/OutputSlot",
-                                "_id": "1506f5db-3906-46da-9720-edb5ac8b6e84"
-                            }
-                        },
-                        {
-                            "type": "sima/post/SlotConnection",
-                            "useQuery": false,
-                            "toSlot": {
-                                "type": "sima/post/InputSlot",
-                                "_id": "2cc1c931-d141-4bcf-8172-16840c719ca4"
-                            },
-                            "fromSlot": {
-                                "type": "sima/workflow/FileOutputSlot",
-                                "_id": "7f4da098-5ef2-41b0-b744-76460caa2967"
-                            }
-                        },
-                        {
-                            "type": "sima/post/SlotConnection",
-                            "useQuery": false,
-                            "toSlot": {
-                                "type": "sima/post/InputSlot",
-                                "_id": "2cc1c931-d141-4bcf-8172-16840c719ca4"
-                            },
-                            "fromSlot": {
-                                "type": "sima/post/OutputSlot",
-                                "_id": "1506f5db-3906-46da-9720-edb5ac8b6e84"
-                            }
-                        },
-                        {
-                            "type": "sima/post/SlotConnection",
-                            "useQuery": false,
-                            "toSlot": {
-                                "type": "sima/post/NumberSignalInputSlot",
-                                "_id": "a04908c2-4043-4cc4-a8f7-c1475945b1de"
-                            },
-                            "fromSlot": {
-                                "type": "sima/workflow/VariableOutputSlot",
-                                "_id": "3b86c374-a5ec-4dff-b42b-160cc7ac4f6f"
-                            }
-                        },
-                        {
-                            "type": "sima/post/SlotConnection",
-                            "useQuery": false,
-                            "toSlot": {
-                                "type": "sima/post/InputSlot",
-                                "_id": "845f0001-2856-4e96-a2dd-7cf0460434b7"
-                            },
-                            "fromSlot": {
-                                "type": "sima/workflow/FileOutputSlot",
-                                "_id": "7f4da098-5ef2-41b0-b744-76460caa2967"
-                            }
-                        }
-                    ]
-                }
-            ]
+ "type" : "sima/ModelContent",
+ "header" : {
+  "type" : "sima/Header",
+  "packages" : [{
+    "type" : "sima/PackageInfo",
+    "name" : "workflow",
+    "version" : 18
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "post",
+    "version" : 26
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "graph",
+    "version" : 4
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "sima",
+    "version" : 24
+   }]
+ },
+ "contents" : [{
+   "name" : "WorkflowTask",
+   "type" : "sima/workflow/WorkflowTask",
+   "runNumber" : 0,
+   "workflows" : [{
+     "name" : "workflow",
+     "type" : "sima/workflow/Workflow",
+     "nodes" : [{
+       "type" : "sima/workflow/ExternalProgramNode",
+       "scriptableValues" : [{
+         "type" : "sima/sima/ScriptableValue",
+         "script" : "scale",
+         "dependencies" : [{
+           "type" : "sima/sima/Dependency",
+           "object" : {
+            "type" : "sima/post/NumberSignalInputSlot",
+            "_id" : "5b48d7d7-72a7-400a-87be-eb9528a67cd3"
+           },
+           "feature" : "value"
+          }],
+         "cyclic" : false,
+         "feature" : "arguments",
+         "index" : -1
+        }],
+       "x" : 260,
+       "y" : 90,
+       "h" : 0,
+       "w" : 0,
+       "controlSignalInputSlots" : [{
+         "name" : "scale",
+         "_id" : "5b48d7d7-72a7-400a-87be-eb9528a67cd3",
+         "type" : "sima/post/NumberSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false,
+         "value" : 0.0
+        }],
+       "executable" : "sima://ExternalStorage\\multiply.py",
+       "arguments" : "5.0",
+       "fileInputSlots" : [{
+         "name" : "in",
+         "_id" : "263517b5-cd1d-4bca-a556-d5b4907714a5",
+         "type" : "sima/workflow/FileInputSlot",
+         "filename" : "in.json",
+         "specifyAdditionalProperties" : false
+        }],
+       "fileOutputSlots" : [{
+         "name" : "out",
+         "_id" : "c8920707-7f55-433f-b371-fbb0a0cf5ff0",
+         "type" : "sima/workflow/FileOutputSlot",
+         "filename" : "out.json",
+         "pathOnly" : false
+        }],
+       "fileFormat" : "JSON",
+       "failOnErrorCode" : true,
+       "addInputFiles" : false
+      }, {
+       "type" : "sima/workflow/SignalGeneratorWorkflowNode",
+       "x" : 40,
+       "y" : 30,
+       "h" : 0,
+       "w" : 0,
+       "root" : {
+        "name" : "root",
+        "type" : "sima/post/SignalGeneratorContainer",
+        "children" : [{
+          "name" : "some_data",
+          "type" : "sima/post/SignalGeneratorContainer",
+          "signals" : [{
+            "name" : "mysine",
+            "type" : "sima/post/EquidistantSignal",
+            "directInput" : false,
+            "values" : [],
+            "xunit" : "s",
+            "yunit" : "-",
+            "offset" : 0.0,
+            "increment" : 0.1,
+            "size" : 100,
+            "function" : "cos(x)"
+           }, {
+            "name" : "mynum",
+            "type" : "sima/post/ConstantValue",
+            "value" : 1.0,
+            "unit" : "-"
+           }]
+         }]
+       },
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "a6ade7d7-ed4f-44f4-bd85-ae183690c923",
+        "type" : "sima/post/OutputSlot"
+       }
+      }, {
+       "name" : "Plot",
+       "type" : "sima/workflow/PlotNode",
+       "x" : 530,
+       "y" : 30,
+       "h" : 0,
+       "w" : 0,
+       "inputSlot" : {
+        "name" : "in",
+        "_id" : "774eec52-ea1a-4aa0-8ad6-50827cd09f55",
+        "type" : "sima/post/InputSlot"
+       },
+       "figureTemplate" : {
+        "type" : "sima/post/FigureTemplate",
+        "titleFont" : {
+         "type" : "sima/sima/FontDescription",
+         "size" : 0,
+         "style" : "NORMAL",
+         "color" : {
+          "type" : "sima/sima/SIMAColor",
+          "red" : 0.0,
+          "green" : 0.0,
+          "blue" : 0.0
+         }
         },
-        {
-            "name": "ExternalStorage",
-            "type": "sima/sima/StorageTask",
-            "runNumber": 0,
-            "_type": "PRIVATE",
-            "root": "",
-            "includeInExport": true
-        }
-    ]
+        "legendFont" : {
+         "type" : "sima/sima/FontDescription",
+         "size" : 0,
+         "style" : "NORMAL",
+         "color" : {
+          "type" : "sima/sima/SIMAColor",
+          "red" : 0.0,
+          "green" : 0.0,
+          "blue" : 0.0
+         }
+        },
+        "xAxis" : {
+         "type" : "sima/post/AxisConfiguration",
+         "font" : {
+          "type" : "sima/sima/FontDescription",
+          "size" : 0,
+          "style" : "NORMAL",
+          "color" : {
+           "type" : "sima/sima/SIMAColor",
+           "red" : 0.0,
+           "green" : 0.0,
+           "blue" : 0.0
+          }
+         },
+         "log" : false,
+         "autoFormat" : true,
+         "format" : "0.####E0",
+         "showGrid" : true,
+         "dashGridLine" : false,
+         "autoScale" : true,
+         "minimum" : 0.0,
+         "maximum" : 0.0
+        },
+        "yAxis" : {
+         "type" : "sima/post/AxisConfiguration",
+         "font" : {
+          "type" : "sima/sima/FontDescription",
+          "size" : 0,
+          "style" : "NORMAL",
+          "color" : {
+           "type" : "sima/sima/SIMAColor",
+           "red" : 0.0,
+           "green" : 0.0,
+           "blue" : 0.0
+          }
+         },
+         "log" : false,
+         "autoFormat" : true,
+         "format" : "0.####E0",
+         "showGrid" : true,
+         "dashGridLine" : false,
+         "autoScale" : true,
+         "minimum" : 0.0,
+         "maximum" : 0.0
+        },
+        "showTitle" : true,
+        "showLegend" : true,
+        "size" : "DYNAMIC",
+        "width" : 0,
+        "height" : 0
+       },
+       "traces" : [{
+         "name" : "mysine_frompy",
+         "type" : "sima/post/TraceConfiguration",
+         "path" : "some_data.mysine_frompy",
+         "color" : {
+          "type" : "sima/sima/SIMAColor",
+          "red" : 0.08235294117647059,
+          "green" : 0.08235294117647059,
+          "blue" : 0.7686274509803922
+         },
+         "lineStyle" : "SOLID",
+         "lineWidth" : 1,
+         "pointStyle" : "NONE",
+         "showStatistics" : true,
+         "pointSize" : 4,
+         "specifyPath" : false
+        }, {
+         "name" : "mysine",
+         "type" : "sima/post/TraceConfiguration",
+         "path" : "some_data.mysine",
+         "color" : {
+          "type" : "sima/sima/SIMAColor",
+          "red" : 0.9490196078431372,
+          "green" : 0.10196078431372549,
+          "blue" : 0.10196078431372549
+         },
+         "lineStyle" : "SOLID",
+         "lineWidth" : 1,
+         "pointStyle" : "NONE",
+         "showStatistics" : true,
+         "pointSize" : 4,
+         "specifyPath" : false
+        }],
+       "fixed" : true,
+       "selectAll" : false,
+       "outputSlot" : {
+        "name" : "image",
+        "type" : "sima/post/OutputSlot"
+       },
+       "createImages" : false
+      }, {
+       "name" : "scale",
+       "type" : "sima/workflow/RealNumberInput",
+       "x" : 50,
+       "y" : 130,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "cfecc772-54b6-4352-89d4-6e7448380095",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : 5.0,
+       "array" : false,
+       "values" : []
+      }, {
+       "name" : "File_Output",
+       "type" : "sima/workflow/FileOutputNode",
+       "x" : 540,
+       "y" : 120,
+       "h" : 0,
+       "w" : 0,
+       "inputSlot" : {
+        "name" : "in",
+        "_id" : "3a8e5071-f372-43df-80c7-4de951a5f462",
+        "type" : "sima/post/InputSlot"
+       },
+       "filePath" : "sima://out.json",
+       "fileFormat" : "JSON",
+       "addMetaTags" : false,
+       "decimalSeparator" : "PERIOD",
+       "skipHeader" : false,
+       "specifyAdditionalProperties" : false,
+       "writeRawText" : false,
+       "outputSlot" : {
+        "name" : "path",
+        "type" : "sima/post/OutputSlot"
+       }
+      }],
+     "connections" : [{
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/workflow/FileInputSlot",
+        "_id" : "263517b5-cd1d-4bca-a556-d5b4907714a5"
+       },
+       "fromSlot" : {
+        "type" : "sima/post/OutputSlot",
+        "_id" : "a6ade7d7-ed4f-44f4-bd85-ae183690c923"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/InputSlot",
+        "_id" : "774eec52-ea1a-4aa0-8ad6-50827cd09f55"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/FileOutputSlot",
+        "_id" : "c8920707-7f55-433f-b371-fbb0a0cf5ff0"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/InputSlot",
+        "_id" : "774eec52-ea1a-4aa0-8ad6-50827cd09f55"
+       },
+       "fromSlot" : {
+        "type" : "sima/post/OutputSlot",
+        "_id" : "a6ade7d7-ed4f-44f4-bd85-ae183690c923"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/NumberSignalInputSlot",
+        "_id" : "5b48d7d7-72a7-400a-87be-eb9528a67cd3"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "cfecc772-54b6-4352-89d4-6e7448380095"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/InputSlot",
+        "_id" : "3a8e5071-f372-43df-80c7-4de951a5f462"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/FileOutputSlot",
+        "_id" : "c8920707-7f55-433f-b371-fbb0a0cf5ff0"
+       }
+      }]
+    }]
+  }, {
+   "name" : "ExternalStorage",
+   "type" : "sima/sima/StorageTask",
+   "runNumber" : 0,
+   "_type" : "PRIVATE",
+   "root" : "",
+   "includeInExport" : true
+  }]
 }
+

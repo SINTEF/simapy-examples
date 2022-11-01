@@ -12,8 +12,8 @@ This example requires SIMA version 4.4.0 or later.
 import os
 import uuid
 from pathlib import Path
-import subprocess
 
+from simapy.sima import SIMA
 from simapy.sima_reader import SIMAReader
 from simapy.sima_writer import SIMAWriter
 import shutil
@@ -34,7 +34,9 @@ def main():
     # data and perhaps make SIMA run a simulation with the task. For this example we
     # just export it to a JSON file called imported.json. This file can be imported
     # into SIMA in order to inspect the results.
-    SIMAWriter().write([task], 'imported.json')
+    file =  Path("output/simo/simo_wamit_import.json")
+    os.makedirs(file.parent,exist_ok=True)
+    SIMAWriter().write([task], file)
 
 
 def import_file(filename):
@@ -66,7 +68,7 @@ def import_file(filename):
         shutil.rmtree(workspace, ignore_errors=True)
 
 
-def run_sima(workspace: Path, args: list[str]):
+def run_sima(workspace: Path, commands: list[str]):
     """ Run SIMA with the given workspace directory and command line arguments.
 
     The function uses an environmental variable SRE_EXE to locate the SIMA installation,
@@ -75,18 +77,8 @@ def run_sima(workspace: Path, args: list[str]):
     sre =  os.getenv('SRE_EXE')
     if not sre:
         raise RuntimeError("SRE_EXE environmental variable not set")
-    cmd = [
-        sre,
-        '-consoleLog',
-        '--progress',
-        '-data',
-        workspace
-    ]
-    # Concatenate `args` to argument list
-    cmd += args
-    res = subprocess.run(cmd)
-    if res.returncode != 0:
-        raise RuntimeError('SIMA run failed')
+    sima = SIMA(exe=sre)
+    sima.run(workspace, commands)
 
 
 if __name__ == '__main__':

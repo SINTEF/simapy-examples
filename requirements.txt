@@ -1,2 +1,2 @@
-simapy==4.2.0
+simapy==4.4.0
 numpy

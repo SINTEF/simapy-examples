@@ -1,0 +1,477 @@
+{
+ "type" : "sima/ModelContent",
+ "header" : {
+  "type" : "sima/Header",
+  "packages" : [{
+    "type" : "sima/PackageInfo",
+    "name" : "workflow",
+    "version" : 18
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "post",
+    "version" : 26
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "sima",
+    "version" : 24
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "graph",
+    "version" : 4
+   }]
+ },
+ "contents" : [{
+   "name" : "WorkflowTask",
+   "type" : "sima/workflow/WorkflowTask",
+   "runNumber" : 0,
+   "workflows" : [{
+     "name" : "workflow",
+     "_id" : "6cb5d94f-fcf1-4c10-9c07-c9373ef0633c",
+     "type" : "sima/workflow/Workflow",
+     "nodes" : [{
+       "type" : "sima/workflow/SignalGeneratorWorkflowNode",
+       "x" : 330,
+       "y" : 150,
+       "h" : 121,
+       "w" : 221,
+       "controlSignalInputSlots" : [{
+         "name" : "scale",
+         "_id" : "f835bc33-e405-46a1-a173-de5a5ef2c529",
+         "type" : "sima/post/NumberSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false,
+         "value" : 0.0
+        }, {
+         "name" : "period",
+         "_id" : "2ac50f0f-b900-4e16-878b-a12ec5875d2e",
+         "type" : "sima/post/NumberSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false,
+         "value" : 0.0
+        }, {
+         "name" : "time_length",
+         "_id" : "93b8eb2f-97a4-4b58-90ee-78f5e5f10637",
+         "type" : "sima/post/NumberSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false,
+         "value" : 0.0
+        }, {
+         "name" : "dt",
+         "_id" : "28c052a4-8f95-488d-9775-65742281ccb9",
+         "type" : "sima/post/NumberSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false,
+         "value" : 0.0
+        }],
+       "root" : {
+        "name" : "root",
+        "type" : "sima/post/SignalGeneratorContainer",
+        "signals" : [{
+          "name" : "signal_cos",
+          "type" : "sima/post/EquidistantSignal",
+          "scriptableValues" : [{
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "dt",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "28c052a4-8f95-488d-9775-65742281ccb9"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "increment",
+            "index" : -1
+           }, {
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "time_length/dt",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "93b8eb2f-97a4-4b58-90ee-78f5e5f10637"
+              },
+              "feature" : "value"
+             }, {
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "28c052a4-8f95-488d-9775-65742281ccb9"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "size",
+            "index" : -1
+           }, {
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "0.5*scale+\"*cos(2*pi*x/\"+2*period+\")\"",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "f835bc33-e405-46a1-a173-de5a5ef2c529"
+              },
+              "feature" : "value"
+             }, {
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "2ac50f0f-b900-4e16-878b-a12ec5875d2e"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "function",
+            "index" : -1
+           }],
+          "directInput" : false,
+          "values" : [],
+          "xunit" : "s",
+          "yunit" : "-",
+          "offset" : 0.0,
+          "increment" : 0.01,
+          "size" : 600,
+          "function" : "5*cos(2*pi*x/2)"
+         }, {
+          "name" : "signal_sin",
+          "type" : "sima/post/EquidistantSignal",
+          "scriptableValues" : [{
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "scale+\"*sin(2*pi*x/\"+period+\")\"",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "f835bc33-e405-46a1-a173-de5a5ef2c529"
+              },
+              "feature" : "value"
+             }, {
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "2ac50f0f-b900-4e16-878b-a12ec5875d2e"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "function",
+            "index" : -1
+           }, {
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "dt",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "28c052a4-8f95-488d-9775-65742281ccb9"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "increment",
+            "index" : -1
+           }, {
+            "type" : "sima/sima/ScriptableValue",
+            "script" : "time_length/dt",
+            "dependencies" : [{
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "93b8eb2f-97a4-4b58-90ee-78f5e5f10637"
+              },
+              "feature" : "value"
+             }, {
+              "type" : "sima/sima/Dependency",
+              "object" : {
+               "type" : "sima/post/NumberSignalInputSlot",
+               "_id" : "28c052a4-8f95-488d-9775-65742281ccb9"
+              },
+              "feature" : "value"
+             }],
+            "cyclic" : false,
+            "feature" : "size",
+            "index" : -1
+           }],
+          "directInput" : false,
+          "values" : [],
+          "xunit" : "s",
+          "yunit" : "-",
+          "offset" : 0.0,
+          "increment" : 0.01,
+          "size" : 600,
+          "function" : "10*sin(2*pi*x/1)"
+         }]
+       },
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "ff98d67d-139a-4deb-b588-ea4f9e88046a",
+        "type" : "sima/post/OutputSlot"
+       }
+      }, {
+       "name" : "File_Output",
+       "type" : "sima/workflow/FileOutputNode",
+       "scriptableValues" : [{
+         "type" : "sima/sima/ScriptableValue",
+         "script" : "\"sima://StorageTask/\"+fname+\".h5\"",
+         "dependencies" : [{
+           "type" : "sima/sima/Dependency",
+           "object" : {
+            "type" : "sima/post/TextSignalInputSlot",
+            "_id" : "4a196223-5508-4ef7-a033-6fe1a873eaa8"
+           },
+           "feature" : "value"
+          }],
+         "cyclic" : false,
+         "feature" : "filePath",
+         "index" : -1
+        }],
+       "x" : 610,
+       "y" : 180,
+       "h" : 0,
+       "w" : 0,
+       "controlSignalInputSlots" : [{
+         "name" : "fname",
+         "_id" : "4a196223-5508-4ef7-a033-6fe1a873eaa8",
+         "type" : "sima/post/TextSignalInputSlot",
+         "specifyAdditionalProperties" : false,
+         "array" : false
+        }],
+       "inputSlot" : {
+        "name" : "in",
+        "_id" : "233b9abe-fea9-4194-bbba-03e1c1108f0f",
+        "type" : "sima/post/InputSlot"
+       },
+       "filePath" : "sima://StorageTask/out.h5",
+       "fileFormat" : "HDF5",
+       "addMetaTags" : false,
+       "decimalSeparator" : "PERIOD",
+       "skipHeader" : false,
+       "specifyAdditionalProperties" : false,
+       "writeRawText" : false,
+       "outputSlot" : {
+        "name" : "path",
+        "type" : "sima/post/OutputSlot"
+       }
+      }, {
+       "name" : "scale",
+       "_id" : "abd7f036-8fb1-47f1-84f7-7028c0e22df1",
+       "type" : "sima/workflow/RealNumberInput",
+       "x" : 190,
+       "y" : 101,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "f0b33b63-bbf6-409a-a3a3-0c01795bdddb",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : 1.0,
+       "array" : false,
+       "values" : []
+      }, {
+       "name" : "period",
+       "_id" : "1b373910-8a1c-4ff1-a986-3f7346b46c6c",
+       "type" : "sima/workflow/RealNumberInput",
+       "x" : 190,
+       "y" : 171,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "6c5cbeb9-cc2c-4252-bea0-1bec6e19f4c3",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : 1.0,
+       "array" : false,
+       "values" : []
+      }, {
+       "name" : "time",
+       "_id" : "53f1d010-5e46-4558-b6f1-ea5044c72fae",
+       "type" : "sima/workflow/RealNumberInput",
+       "x" : 190,
+       "y" : 230,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "bc79f013-cfa4-4fec-916f-b25948370268",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : 6.0,
+       "array" : false,
+       "values" : []
+      }, {
+       "name" : "dt",
+       "_id" : "bc55a3d2-f949-4d01-92d0-c1d3ebbe7172",
+       "type" : "sima/workflow/RealNumberInput",
+       "x" : 190,
+       "y" : 289,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "3d08b4cb-5f26-4fcd-ad4a-5cdd00d684b6",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : 0.01,
+       "array" : false,
+       "values" : []
+      }, {
+       "name" : "hdf5_file_out_prefix",
+       "_id" : "f8b70e9a-b801-44cc-9278-fa59ee3164db",
+       "type" : "sima/workflow/TextInput",
+       "x" : 438,
+       "y" : 279,
+       "h" : 0,
+       "w" : 0,
+       "outputSlot" : {
+        "name" : "out",
+        "_id" : "e85b7bf7-c425-4bcf-bfd2-85bd8b2ca5dc",
+        "type" : "sima/workflow/VariableOutputSlot"
+       },
+       "specifyAdditionalProperties" : false,
+       "value" : "tmp",
+       "array" : false,
+       "values" : []
+      }],
+     "connections" : [{
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/NumberSignalInputSlot",
+        "_id" : "f835bc33-e405-46a1-a173-de5a5ef2c529"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "f0b33b63-bbf6-409a-a3a3-0c01795bdddb"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/InputSlot",
+        "_id" : "233b9abe-fea9-4194-bbba-03e1c1108f0f"
+       },
+       "fromSlot" : {
+        "type" : "sima/post/OutputSlot",
+        "_id" : "ff98d67d-139a-4deb-b588-ea4f9e88046a"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/NumberSignalInputSlot",
+        "_id" : "2ac50f0f-b900-4e16-878b-a12ec5875d2e"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "6c5cbeb9-cc2c-4252-bea0-1bec6e19f4c3"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/NumberSignalInputSlot",
+        "_id" : "93b8eb2f-97a4-4b58-90ee-78f5e5f10637"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "bc79f013-cfa4-4fec-916f-b25948370268"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/NumberSignalInputSlot",
+        "_id" : "28c052a4-8f95-488d-9775-65742281ccb9"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "3d08b4cb-5f26-4fcd-ad4a-5cdd00d684b6"
+       }
+      }, {
+       "type" : "sima/post/SlotConnection",
+       "useQuery" : false,
+       "toSlot" : {
+        "type" : "sima/post/TextSignalInputSlot",
+        "_id" : "4a196223-5508-4ef7-a033-6fe1a873eaa8"
+       },
+       "fromSlot" : {
+        "type" : "sima/workflow/VariableOutputSlot",
+        "_id" : "e85b7bf7-c425-4bcf-bfd2-85bd8b2ca5dc"
+       }
+      }]
+    }, {
+     "name" : "workflowset",
+     "type" : "sima/workflow/Workflow",
+     "nodes" : [{
+       "type" : "sima/workflow/WorkflowSetNode",
+       "x" : 210,
+       "y" : 110,
+       "h" : 0,
+       "w" : 0,
+       "workflow" : {
+        "type" : "sima/workflow/Workflow",
+        "_id" : "6cb5d94f-fcf1-4c10-9c07-c9373ef0633c"
+       },
+       "inputWorkflow" : false,
+       "setFolderName" : false,
+       "variableInputSets" : [{
+         "type" : "sima/workflow/VariableInputSet",
+         "parameter" : {
+          "type" : "sima/workflow/RealNumberInput",
+          "_id" : "bc55a3d2-f949-4d01-92d0-c1d3ebbe7172"
+         },
+         "variations" : ["0.01", "0.01"]
+        }, {
+         "type" : "sima/workflow/VariableInputSet",
+         "parameter" : {
+          "type" : "sima/workflow/RealNumberInput",
+          "_id" : "1b373910-8a1c-4ff1-a986-3f7346b46c6c"
+         },
+         "variations" : ["5.0", "10.0"]
+        }, {
+         "type" : "sima/workflow/VariableInputSet",
+         "parameter" : {
+          "type" : "sima/workflow/RealNumberInput",
+          "_id" : "abd7f036-8fb1-47f1-84f7-7028c0e22df1"
+         },
+         "variations" : ["1.0", "2.0"]
+        }, {
+         "type" : "sima/workflow/VariableInputSet",
+         "parameter" : {
+          "type" : "sima/workflow/RealNumberInput",
+          "_id" : "53f1d010-5e46-4558-b6f1-ea5044c72fae"
+         },
+         "variations" : ["6.0", "6.0"]
+        }, {
+         "type" : "sima/workflow/VariableInputSet",
+         "parameter" : {
+          "type" : "sima/workflow/TextInput",
+          "_id" : "f8b70e9a-b801-44cc-9278-fa59ee3164db"
+         },
+         "variations" : ["run1", "run2"]
+        }],
+       "writeRunStatus" : false,
+       "input" : "FILE",
+       "filename" : "",
+       "iteration" : "COLUMN",
+       "distribute" : false,
+       "iterateOverInput" : false
+      }]
+    }]
+  }, {
+   "name" : "StorageTask",
+   "type" : "sima/sima/StorageTask",
+   "runNumber" : 0,
+   "_type" : "PRIVATE",
+   "includeInExport" : false
+  }]
+}
+

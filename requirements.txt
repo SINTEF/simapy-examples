@@ -1,2 +1,1 @@
-simapy==4.4.0
-numpy
+simapy==4.4.2

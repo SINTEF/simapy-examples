@@ -1,17 +1,22 @@
 """
-Modifies an sima workflowset (json) to take input from file, run it using SIMA and load in results for plotting figures
+Modifies an sima workflowset (json) to take input from file, 
+run it using SIMA and load in results for plotting figures
 """
 
 import os
 import shutil
 from pathlib import Path
-from simapy_utilities import run_sima, generate_workflowset_input_file, set_json_workflowset_input_file
 
-from matplotlib import pyplot as plt
-import numpy as np
 import h5py
+import numpy as np
+from matplotlib import pyplot as plt
+
+from workflowset_utilities import (generate_workflowset_input_file,
+                                               run_sima,
+                                               set_json_workflowset_input_file)
 
 # Root folder, path to sima sre exe and other file names
+# pylint: disable=invalid-name
 root = str(Path(__file__).parent)
 sre_exe_path =  os.getenv('SRE_EXE')
 original_json_file = root + "/input/workflow_task.json"
@@ -55,7 +60,7 @@ commands.append("--run")
 commands.append(f"task={workflow_task_name}")
 commands.append(f"workflow={workflow_name}")
 
-# Create worspace folder, run sima and delete worspace folder
+# Create workspace folder, run sima and delete worspace folder
 # Re-create workspace folder
 ws = Path(workspace)
 if ws.exists():
@@ -73,7 +78,7 @@ finally:
 for i, hdf5_prefix in enumerate(workflowset_input_variables["hdf5_file_out_prefix"]):
     hdf5_file = root + "/output/" + hdf5_prefix + ".h5"
     with h5py.File(hdf5_file, "r") as f:
-        
+
         # Read timeseries data
         signal_cos = f["/signal_cos"]
         signal_sin = f["/signal_sin"]

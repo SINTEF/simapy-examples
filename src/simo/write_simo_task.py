@@ -8,15 +8,13 @@ from sima import hydro
 
 from simapy.sima_writer import SIMAWriter
 
-task = simo.SIMOTask(name="test",model=simo.SIMOModel())
-body = simo.SIMOBody(name="body",_type=simo.BodyType.THREE_DOF_TIME_DOMAIN)
+task = simo.SIMOTask(name="test", model=simo.SIMOModel())
+body = simo.SIMOBody(name="body", _type=simo.BodyType.THREE_DOF_TIME_DOMAIN)
 body.structuralMass = hydro.StructuralMass(mass=100.0)
 
 task.model.bodies.append(body)
 
-file =  Path("output/simo/simo_task.json")
-os.makedirs(file.parent,exist_ok=True)
+file = Path("output/simo/simo_task.json")
+os.makedirs(file.parent, exist_ok=True)
 writer = SIMAWriter()
-writer.write([task],file,indent=4)
-
-
+writer.write([task], file, indent=4)

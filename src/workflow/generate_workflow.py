@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 from simapy.sima_reader import SIMAReader
 from simapy.sima_writer import SIMAWriter
-from sima.sima.storagetask import StorageTask
+from simapy.sima.sima.storagetask import StorageTask
 
 def generate() -> Path:
     reader = SIMAReader()

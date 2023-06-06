@@ -4,10 +4,9 @@ Generate a workflow then run it with input using SIMA
 import os
 import shutil
 from pathlib import Path
-from simapy.sima import SIMA
+from simapy.sre import SIMA
 from simapy.sima_reader import SIMAReader
-from marmo.containers.container import Container
-from marmo.containers.dimensionalscalar import DimensionalScalar
+from simapy.sima import signals
 
 from generate_workflow import generate
 
@@ -32,23 +31,15 @@ commands.append(f"input=scale={scale}")
 # Requires that the environment is set, but an alternative path may be given
 exe =  os.getenv('SRE_EXE')
 sima = SIMA(exe=exe)
-output = sima.run(workspace=str(ws),commands=commands)
-for line in output:
-    print(line)
+sima.run(ws,commands)
 
 output = ws / "out.json"
 
 sima_reader = SIMAReader()
 
 items = sima_reader.read(output)
-container: Container = items[0]
-signals = container.signals
-mynum: DimensionalScalar = container.signals[1]
+container: signals.Container = items[0]
+mynum: signals.DimensionalScalar = container.signals[1]
 print(f"{mynum.name}={mynum.value}")
 if mynum.value != scale:
-    raise Exception(f"Number not as expected {mynum.value} vs {scale}")
-
-
-
-
-
+    raise ValueError(f"Number not as expected {mynum.value} vs {scale}")

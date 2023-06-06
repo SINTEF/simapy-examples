@@ -5,7 +5,7 @@ import os
 import shutil
 from pathlib import Path
 
-from simapy.sima import SIMA
+from simapy.sre import SIMA
 
 ws = Path("output/simo/condition")
 if ws.exists():
@@ -26,6 +26,4 @@ commands.append("runType=dynamic")
 # Requires that the environment is set, but an alternative path may be given
 exe = os.getenv("SRE_EXE")
 sima = SIMA(exe=exe)
-output = sima.run(workspace=str(ws), commands=commands)
-for line in output:
-    print(line)
+sima.run(ws, commands)

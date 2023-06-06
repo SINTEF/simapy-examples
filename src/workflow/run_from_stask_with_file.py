@@ -4,11 +4,11 @@ Imports stask then run the given workflow with input from file
 import os
 import shutil
 from pathlib import Path
-from simapy.sima import SIMA
+from simapy.sre import SIMA
 from simapy.sima_reader import SIMAReader
 from simapy.sima_writer import SIMAWriter
-from marmo.containers.container import Container
-from marmo.containers.equallyspacedsignal import EquallySpacedSignal
+from simapy.sima.signals.container import Container
+from simapy.sima.signals.equallyspacedsignal import EquallySpacedSignal
 
 ws = Path("output/workflow/ws")
 if ws.exists():
@@ -36,10 +36,7 @@ commands.append("workflow=outer")
 # Requires that the environment is set, but an alternative path may be given
 exe =  os.getenv('SRE_EXE')
 sima = SIMA(exe=exe)
-output = sima.run(workspace=str(ws),commands=commands)
-for line in output:
-    print(line)
-
+sima.run(ws,commands)
 output = ws / "Output/output.json"
 
 sima_reader = SIMAReader()

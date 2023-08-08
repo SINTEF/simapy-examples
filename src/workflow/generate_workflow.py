@@ -10,8 +10,10 @@ from simapy.sima_writer import SIMAWriter
 from sima.sima.storagetask import StorageTask
 
 def generate() -> Path:
+    # Locate json task file in folder "input" at the root of this repository
+    filename = Path(__file__).parent / ".." / ".." / "input" / "workflow" / "workflow_task.json"
     reader = SIMAReader()
-    tasks = reader.read("input/workflow/workflow_task.json")
+    tasks = reader.read(filename)
     # Using type hints is not necessary but is useful to get automatic help when using an IDE, such as vscode or pycharm
 
     # We will now update the storage task to point to this script using the relative root

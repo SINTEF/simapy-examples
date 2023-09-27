@@ -24,7 +24,8 @@ b.value = [3.0 ,4.0, 5.0]
 
 SIMAWriter().write([a,b], ws / "input.json")
 
-stask = Path("input/workflow/simple_workflow_run.stask")
+# Locate stask file in folder "input" at the root of this repository
+stask = Path(__file__).parent / ".." / ".." / "input" / "workflow" / "simple_workflow_run.stask"
 
 commands = []
 commands.append("--import")

@@ -75,11 +75,6 @@ if __name__ == "__main__":
     start_date = datetime(2020, 10, 21)
     end_date = datetime(2020, 11, 21)
 
-    values = {
-        "longitude": 5.835813,
-        "latitude": 64.731729,
-    }
-
     lon_pos = 5.835813
     lat_pos = 64.731729
 

@@ -32,12 +32,6 @@ def _create_sima_scatter(scatter: bluesmet.Scatter, description: str) -> simamet
     # Assumption on level, as the dataset does not state the reference height
     wc.level = 10.0
     wc.speed = wspeed
-    # We need to convert the wind direction to match the system for Metocean task in SIMA
-    # Met: North West Up, wind_going_to
-    # SIMA: North East Down, wind coming from
-    # SIMA direction = MET dir + 90 deg
-    # Add 90 to the directions where occurences is larger than 0
-    wdir[occurences > 0] += 90
     wc.direction = wdir
     omni.wind = [wc]
     return sima_scatter
@@ -62,15 +56,23 @@ def create_scatter():
     bin_size = 2.0
     scatter = bluesmet.Scatter(bin_size=bin_size)
     for hs, tp,ff,dd in zip(values["hs"], values["tp"],values["ff"],values["dd"]):
-        # FIXME: Orientering
-        scatter.add(hs, tp,wind_dir=dd,wind_speed=ff)
+        # We need to convert the wind direction to match the system for Metocean task in SIMA
+        # Met: North West Up, wind_going_to
+        # SIMA: North East Down, wind coming from
+        # SIMA direction = MET dir + 90 deg
+        wind_dir = (dd+90.0) % 360.0
+        scatter.add(hs, tp,wind_dir=wind_dir,wind_speed=ff)
 
     sd = start_date.strftime("%Y.%m.%d.%H")
     ed = end_date.strftime("%Y.%m.%d.%H")
 
     prefix = f"omnidir_scatter_{sd}-{ed}"
 
-    description = f"Created with data from met.no\nFrom {sd} to {ed} at latitude={lat_pos}, longitude={lon_pos}\nSee {url}"
+
+    description = f"""
+Created with data from met.no
+From {sd} to {ed} at latitude={lat_pos}, longitude={lon_pos}
+See {url}"""
     sima_scatter = _create_sima_scatter(scatter,description)
 
     path = output / f"{prefix}.h5"

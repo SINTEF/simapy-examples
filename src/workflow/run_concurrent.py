@@ -13,7 +13,8 @@ from simapy.sima.signals.equallyspacedsignal import EquallySpacedSignal
 
 def run_single(case_num: int, a: float, b: float):
     print(f'Starting case {case_num}')
-    ws = Path(f'ws_{case_num}')
+    ws_root = Path(__file__).parent / '..' / '..' / 'output' / 'workflow' / 'concurent'
+    ws = ws_root / f'ws_{case_num}'
     if ws.exists():
         shutil.rmtree(ws,ignore_errors=True)
     os.makedirs(ws,exist_ok=True)
@@ -36,8 +37,20 @@ def run_single(case_num: int, a: float, b: float):
     commands.append('workflow=outer')
 
     # Requires that the environment is set, but an alternative path may be given
-    exe =  os.getenv('SRE_EXE')
-    sima = SIMA(exe=exe)
+
+    sima = SIMA()
+    # Create a handler to print the progress while running
+    def __handle_output(line):
+        # "@STATUS "Total" 800 1000"
+        if line.startswith("@STATUS"):
+            # Findt the last number
+            parts = line.split()
+            worked = float(parts[-1-1])
+            total = float(parts[-1])
+            progress = 100 * worked/total
+            print(f"Progress case {case_num}: ",progress,"%")
+
+    sima.console_handler = __handle_output
     sima.run(working_dir=str(ws), command_args=commands)
     print(f'Case {case_num} completed successfully')
 

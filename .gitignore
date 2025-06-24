@@ -13,3 +13,18 @@ output/
 cache/
 *.csv
 *.nc
+
+# Sphinx documentation
+docs/_build/
+docs/_autosummary/
+docs/.DS_Store
+docs/_static/.DS_Store
+docs/_templates/.DS_Store
+
+# Read the Docs
+.readthedocs/
+
+# Editor backup files
+*~
+.*.swp
+.*.swo

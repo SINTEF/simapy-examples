@@ -4,32 +4,32 @@
   "type" : "sima/Header",
   "packages" : [{
     "type" : "sima/PackageInfo",
-    "name" : "hydro",
-    "version" : 29
-   }, {
-    "type" : "sima/PackageInfo",
-    "name" : "riflex",
-    "version" : 44
-   }, {
-    "type" : "sima/PackageInfo",
-    "name" : "windturbine",
-    "version" : 11
-   }, {
-    "type" : "sima/PackageInfo",
-    "name" : "environment",
-    "version" : 23
+    "name" : "simo",
+    "version" : 47
    }, {
     "type" : "sima/PackageInfo",
     "name" : "condition",
     "version" : 20
    }, {
     "type" : "sima/PackageInfo",
+    "name" : "riflex",
+    "version" : 45
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "hydro",
+    "version" : 30
+   }, {
+    "type" : "sima/PackageInfo",
+    "name" : "windturbine",
+    "version" : 12
+   }, {
+    "type" : "sima/PackageInfo",
     "name" : "sima",
     "version" : 25
    }, {
     "type" : "sima/PackageInfo",
-    "name" : "simo",
-    "version" : 46
+    "name" : "environment",
+    "version" : 24
    }]
  },
  "contents" : [{
@@ -558,14 +558,11 @@
      },
      "envelopeCurveSpecification" : {
       "type" : "sima/riflex/EnvelopeCurveSpecification",
-      "compDisplacement" : true,
-      "compForce" : true,
-      "compCurvature" : true,
+      "storeDisplacement" : true,
+      "storeForce" : true,
+      "storeCurvature" : true,
       "startTime" : 60.0,
-      "endTime" : 72.0,
-      "printDisplacement" : true,
-      "printForce" : true,
-      "printCurvature" : true
+      "endTime" : 72.0
      },
      "displacementResponseStorage" : {
       "type" : "sima/riflex/DisplacementResponseStorage",
@@ -682,6 +679,9 @@
       "rigidMoonpoolColumns" : {
        "_id" : "4a51fdd7-9b0d-4b01-878e-c8e1049bda6d",
        "type" : "sima/riflex/RigidMoonpoolColumn"
+      },
+      "windVelocityRamping" : {
+       "type" : "sima/riflex/WindVelocityRamping"
       }
      },
      "bottomContactStorage" : {

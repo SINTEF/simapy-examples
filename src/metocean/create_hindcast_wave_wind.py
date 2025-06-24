@@ -70,52 +70,56 @@ def __create_hindcast(hc_name, hc_values, lat_pos, lon_pos):
     return hindcast
 
 
-start_date = "2017-01-19"
-end_date = "2017-01-20"
+if __name__ == "__main__":
+    start_date = "2017-01-19"
+    end_date = "2017-01-20"
 
-lon_pos = 5.835813
-lat_pos = 64.731729
+    lon_pos = 5.835813
+    lat_pos = 64.731729
 
-product = "NORA3_wind_wave"
+    product = "NORA3_wind_wave"
 
-name = f"hindcast-{product}-{start_date}-{end_date}"
-requested_values = [
-    "hs",
-    "tp",
-    "thq",
-    "hs_sea",
-    "tp_sea",
-    "thq_sea",
-    "hs_swell",
-    "tp_swell",
-    "thq_swell",
-    "wind_speed",
-    "wind_direction",
-]
+    name = f"hindcast-{product}-{start_date}-{end_date}"
+    requested_values = [
+        "hs",
+        "tp",
+        "thq",
+        "hs_sea",
+        "tp_sea",
+        "thq_sea",
+        "hs_swell",
+        "tp_swell",
+        "thq_swell",
+        "wind_speed",
+        "wind_direction",
+    ]
 
-nc_file = f"./output/simamet/{name}.nc"
+    output_dir = Path("./output/simamet")
+    output_dir.mkdir(exist_ok=True, parents=True)
+    nc_file = str(output_dir / f"{name}.nc")
 
-df_ts = ts.TimeSeries(
-    lon=lon_pos,
-    lat=lat_pos,
-    datafile=nc_file,
-    start_time=start_date,
-    end_time=end_date,
-    product=product,
-)
+    df_ts = ts.TimeSeries(
+        lon=lon_pos,
+        lat=lat_pos,
+        datafile=nc_file,
+        start_time=start_date,
+        end_time=end_date,
+        product=product,
+    )
 
-# Start timing
-start = time.time()
-df_ts.import_data(save_csv=False, save_nc=True, use_cache=True)
+    # Start timing
+    start = time.time()
+    df_ts.import_data(save_csv=False, save_nc=True, use_cache=True)
 
-# End timing and print elapsed time
-end = time.time()
-print("Elapsed time: " + str(end - start) + " seconds")
+    # End timing and print elapsed time
+    end = time.time()
+    print("Elapsed time: " + str(end - start) + " seconds")
 
-with xr.open_dataset(nc_file) as values:
-    hindcast_data = __create_hindcast(name, values, df_ts.lat_data, df_ts.lon_data)
-    dates = values["time"].values
-    path = Path(f"./output/simamet/{name}.h5")
-    path.parent.mkdir(parents=True, exist_ok=True)
-    DMTWriter().write(hindcast_data, path)
-    print(f"Written to {path.resolve()}")
+    with xr.open_dataset(nc_file) as values:
+        hindcast_data = __create_hindcast(name, values, df_ts.lat, df_ts.lon)
+        dates = values["time"].values
+        path = Path(f"./output/simamet/{name}.h5")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        DMTWriter().write(hindcast_data, path)
+        print(f"Written to {path.resolve()}")
+

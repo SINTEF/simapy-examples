@@ -1,6 +1,6 @@
 """
 This example demonstrates how the Python module concurrent.futures may be used to run
-workflows with multiple SIMA instances concurrently.
+workflows with multiple SIMA instances in parallel.
 """
 import os
 import sys
@@ -55,28 +55,32 @@ def run_single(case_num: int, a: float, b: float):
     print(f'Case {case_num} completed successfully')
 
 
-# Run a maximum of cpu_count() - 1 workflows at the same time
-num_concurrent = os.cpu_count() - 1
-# Total number of workflow runs
-num_cases = 10
-with ThreadPoolExecutor(max_workers=num_concurrent) as executor:
-    jobs = []
-    for i in range(num_cases):
-        # Set some arbitrary values for a and b
-        a = i * 2.0
-        b = (i + 1) * 10.0
-        # Submit job
-        jobs.append(executor.submit(run_single, i, a, b))
-    any_failure = False
-    for i, job in enumerate(jobs):
-        try:
-            result = job.result()
-        except Exception as e:
-            print(f'Job {i} Failed: {e}')
-            any_failure = True
+def main():
+    # Run a maximum of cpu_count() - 1 workflows at the same time
+    num_concurrent = os.cpu_count() - 1
+    # Total number of workflow runs
+    num_cases = 10
+    with ThreadPoolExecutor(max_workers=num_concurrent) as executor:
+        jobs = []
+        for i in range(num_cases):
+            # Set some arbitrary values for a and b
+            a = i * 2.0
+            b = (i + 1) * 10.0
+            # Submit job
+            jobs.append(executor.submit(run_single, i, a, b))
+        any_failure = False
+        for i, job in enumerate(jobs):
+            try:
+                job.result()
+            except Exception as e:
+                print(f'Job {i} Failed: {e}')
+                any_failure = True
 
-if any_failure:
-    print('Runs completed with errors')
-    sys.exit(1)
-else:
-    print('All runs completed successfully')
+    if any_failure:
+        print('Runs completed with errors')
+        sys.exit(1)
+    else:
+        print('All runs completed successfully')
+
+if __name__ == "__main__":
+    main()

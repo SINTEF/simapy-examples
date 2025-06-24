@@ -1,6 +1,30 @@
-"""Create an excel file with a scatter table
+"""Create an excel file with a wave scatter table.
 
-  pip install openpyxl
+This example shows how to create a color-coded Excel scatter table visualizing the joint distribution 
+of significant wave height (Hs) and peak period (Tp) from metocean data.
+
+Features:
+    Data Retrieval:
+        Uses metocean_api to get wave data for a specific location and time period
+    Statistical Analysis:
+        Calculates the joint frequency distribution (scatter table) using metocean_stats
+    Visualization:
+        Creates an Excel file with color-coded cells representing occurrence probabilities
+
+Requirements:
+    - openpyxl for Excel file creation
+    - pandas for data handling
+    - metocean_api and metocean_stats for data retrieval and analysis
+
+Example:
+    Basic usage of this script:
+    
+    >>> python create_excel_scatter.py
+
+Note:
+    Requires pandas and openpyxl to be installed:
+    
+    >>> pip install pandas openpyxl
 """
 from pathlib import Path
 import pandas as pd
@@ -100,9 +124,11 @@ def write_scatter():
     writer.write_occurences()
     writer.append([])
 
+    output_dir = Path("./output/simamet")
+    output_dir.mkdir(exist_ok=True, parents=True)
+
     # Save the Excel file
-    path = Path(f"./output/scatter_{product}-{start_date}-{end_date}.xlsx")
-    path.parent.mkdir(parents=True, exist_ok=True)
+    path = output_dir / f"scatter_{product}-{start_date}-{end_date}.xlsx"
     writer.save(path)
 
 

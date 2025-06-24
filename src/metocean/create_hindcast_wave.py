@@ -1,10 +1,36 @@
-"""Read wave data from nora3 and generate metocean hindcast readable from SIMA"""
+"""Create a metocean hindcast wave data file for SIMA.
+
+This example demonstrates how to extract wave data from the NORA3 dataset and convert it
+into a metocean hindcast format that can be read by SIMA. It focuses on a specific storm
+event in Sulafjord, Norway.
+
+Features:
+    Data Retrieval:
+        Uses metocean_api to extract wave data from the NORA3 dataset
+    Wave Parameter Processing:
+        Processes wave parameters including significant height, peak period, and direction
+    SIMA Integration:
+        Converts data to a format compatible with SIMA's metocean module
+
+Requirements:
+    - metocean_api for data retrieval
+    - simapy.metocean for hindcast data handling
+    - xarray for data processing
+    - Access to NORA3 wave dataset
+
+Example:
+    Basic usage of this script:
+    
+    >>> python create_hindcast_wave.py
+    
+    The script generates hindcast files in the output/simamet/ directory.
+"""
 
 from pathlib import Path
 from datetime import datetime
 import time
 import numpy as np
-import xarray as xr
+import pandas as pd
 from dmt.dmt_writer import DMTWriter
 from metocean_api import ts
 import simapy.metocean.hindcast as hc
@@ -17,7 +43,7 @@ def __create_wave(wave_name, hs, tp, direction):
     return hc.StochasticWave(name=wave_name, hs=hs, tp=tp, direction=dir_sima)
 
 
-def __create_hindcast(hc_name, hc_values, lat_pos, lon_pos):
+def __create_hindcast(hc_name, product, hc_values: pd.DataFrame, lat_pos, lon_pos):
     waves = []
 
     waves.append(
@@ -39,7 +65,7 @@ def __create_hindcast(hc_name, hc_values, lat_pos, lon_pos):
 
     # Time is given in Unix epoch
     # convert dates to strings
-    dates = hc_values["time"].astype("datetime64[s]")
+    dates = hc_values.index
     sdates = np.datetime_as_string(dates, unit="h", timezone="UTC").astype("|S")
 
     hindcast = hc.Hindcast()
@@ -52,58 +78,76 @@ def __create_hindcast(hc_name, hc_values, lat_pos, lon_pos):
 
     return hindcast
 
-# https://www.met.no/publikasjoner/met-report  Section Storms in Sulafjord, wind waves and currents
-# https://www.met.no/publikasjoner/met-report/_/attachment/inline/86f02fd2-a979-43ef-a17e-3bdba201e584:c70eb4b6ffe6f3b7b98016f4a0ebfc5ca501c766/MET-report-03-2024.pdf
 
-# Storm 14th of march 2017
-sd = datetime(2017, 3, 14, 10, 0)
-ed = datetime(2017, 3, 14, 13, 0)
+def main():
+    """Execute the main hindcast example.
+    
+    Retrieves wave data for a specific storm event in Sulafjord, Norway, and
+    converts it to a SIMA-compatible hindcast format. The data is saved as
+    both CSV and DMT files for further use in SIMA simulations.
+    """
+    # https://www.met.no/publikasjoner/met-report  Section Storms in Sulafjord, wind waves and currents
+    # https://www.met.no/publikasjoner/met-report/_/attachment/inline/86f02fd2-a979-43ef-a17e-3bdba201e584:c70eb4b6ffe6f3b7b98016f4a0ebfc5ca501c766/MET-report-03-2024.pdf
 
-start_date = sd.strftime("%Y-%m-%d")
-end_date = ed.strftime("%Y-%m-%d")
+    # Storm 14th of March 2017
+    sd = datetime(2017, 3, 14, 10, 0)
+    ed = datetime(2017, 3, 14, 13, 0)
 
-positions = {
-    "Sulesund": {"lat": 62.402865086109195, "lon": 6.028359996993728},
-    "Kvitneset": {"lat": 62.421049661227585, "lon": 6.000482407215768},
-    "BuoyA": {"description": "Sulafjorden", "lat": 62.4263, "lon": 6.0447},
-    "BuoyB": {"description": "Sulafjorden", "lat": 62.4038, "lon": 6.0806},
-    "BuoyD": {"description": "Breisundet", "lat": 62.4464, "lon": 5.9336},
-}
+    start_date = sd.strftime("%Y-%m-%d")
+    end_date = ed.strftime("%Y-%m-%d")
 
-location = "BuoyB"
+    positions = {
+        "Sulesund": {"lat": 62.402865086109195, "lon": 6.028359996993728},
+        "Kvitneset": {"lat": 62.421049661227585, "lon": 6.000482407215768},
+        "BuoyA": {"description": "Sulafjorden", "lat": 62.4263, "lon": 6.0447},
+        "BuoyB": {"description": "Sulafjorden", "lat": 62.4038, "lon": 6.0806},
+        "BuoyD": {"description": "Breisundet", "lat": 62.4464, "lon": 5.9336},
+    }
 
-lat_pos = positions[location]["lat"]
-lon_pos = positions[location]["lon"]
+    location = "BuoyB"
 
-product = "NORA3_wave_sub"
+    lat_pos = positions[location]["lat"]
+    lon_pos = positions[location]["lon"]
 
-name = f"hindcast-{location}-{product}-{start_date}-{end_date}"
+    product = "NORA3_wave_sub"
 
-csv_file = f"./output/simamet/{name}.csv"
-nc_file = csv_file.replace(".csv", ".nc")
+    name = f"hindcast-{location}-{product}-{start_date}-{end_date}"
 
-df_ts = ts.TimeSeries(
-    lon=lon_pos,
-    lat=lat_pos,
-    datafile=csv_file,
-    start_time=start_date,
-    end_time=end_date,
-    product=product,
-)
+    output_dir = Path("./output/simamet")
+    output_dir.mkdir(exist_ok=True, parents=True)
 
-# Start timing
-start = time.time()
-df_ts.import_data(save_csv=True, save_nc=True, use_cache=True)
+    csv_file = str(output_dir / f"{name}.csv")
 
-# End timing and print elapsed time
-end = time.time()
-print("Elapsed time: " + str(end - start) + " seconds")
+    nc_file = csv_file.replace(".csv", ".nc")
 
-with xr.open_dataset(nc_file) as values:
-    print(values.variables)
-    values = values.sel(time=slice(sd, ed))
-    hindcast_data = __create_hindcast(name, values, df_ts.lat_data, df_ts.lon_data)
-    path = Path(f"./output/simamet/{name}.h5")
-    path.parent.mkdir(parents=True, exist_ok=True)
-    DMTWriter().write(hindcast_data, path)
-    print(f"Written to {path.resolve()}")
+    df_ts = ts.TimeSeries(
+        lon=lon_pos,
+        lat=lat_pos,
+        datafile=nc_file,
+        start_time=start_date,
+        end_time=end_date,
+        product=product,
+    )
+
+    # Start timing
+    start = time.time()
+    df_ts.import_data(save_csv=False, save_nc=True, use_cache=True)
+
+    # End timing and print elapsed time
+    end = time.time()
+    print("Elapsed time: " + str(end - start) + " seconds")
+
+    values = df_ts.data
+
+    hindcast = __create_hindcast(name,product, values, lat_pos, lon_pos)
+
+    dmtw = DMTWriter()
+    output_dir = Path("./output/simamet")
+    output_dir.mkdir(exist_ok=True, parents=True)
+    print(f"Writing hindcast to {output_dir / name}.dmt")
+    dmtw.write(hindcast, output_dir / name)
+    print(f"Successfully created hindcast files in {output_dir}")
+
+
+if __name__ == "__main__":
+    main()

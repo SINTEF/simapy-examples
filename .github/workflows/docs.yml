@@ -37,4 +37,18 @@ jobs:
           name: documentation-${{ github.ref_name }}
           path: docs/_build/html
           retention-days: 1
+          
+      # Deploy to GitHub Pages only on main branch
+      - name: Setup Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docs/_build/html'
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        id: deployment
+        uses: actions/deploy-pages@v4
 

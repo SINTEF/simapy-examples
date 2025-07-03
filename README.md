@@ -2,6 +2,8 @@
 
 [simapy](https://github.com/SINTEF/simapy) is a Python library for interacting with SIMA
 
+You can find the documentation [here](https://sintef.github.io/simapy-examples/)
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install simapy.

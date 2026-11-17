@@ -1,21 +1,6 @@
-# Examples using simapy Python library
+# simapy-examples has moved
 
-[simapy](https://github.com/SINTEF/simapy) is a Python library for interacting with SIMA
+The SIMAPy examples are now part of the [SIMAPy documentation](https://sima.sintef.no/docs/5.4/simapy/).
+Download them as `examples.zip` from the [installation page](https://sima.sintef.no/docs/5.4/simapy/installation.html#sec-run-examples).
 
-You can find the documentation [here](https://sintef.github.io/simapy-examples/)
-
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install simapy.
-
-```bash
-pip install -r requirements.txt
-```
-
-## Examples
-
-See src folder for different ways of interacting with simapy.
-You can also check out the [tests](https://github.com/SINTEF/simapy/tree/master/src/tests) in the simapy github repository
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+This repository is archived and no longer updated.

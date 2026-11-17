@@ -4,3 +4,4 @@ The SIMAPy examples are now part of the [SIMAPy documentation](https://sima.sint
 Download them as `examples.zip` from the [installation page](https://sima.sintef.no/docs/5.4/simapy/installation.html#sec-run-examples).
 
 This repository is archived and no longer updated.
+The earlier examples in its history are licensed under [MIT](https://choosealicense.com/licenses/mit/).
